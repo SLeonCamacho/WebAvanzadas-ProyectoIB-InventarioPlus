@@ -7,8 +7,8 @@ export async function GET(request: Request) {
     await sql`
       INSERT INTO Users (name, email, password)
       VALUES 
-        ('Alice', 'alice@example.com', 'password1'),
-        ('Bob', 'bob@example.com', 'password2');
+        ('Santiago', 'santiago.leon@epn.edu.ec', 'password1'),
+        ('Bobby', 'bobby@example.com', 'password2');
     `;
 
     // Inserting data into Inventory table
