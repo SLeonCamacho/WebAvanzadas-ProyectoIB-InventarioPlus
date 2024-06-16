@@ -24,6 +24,38 @@ export async function GET(request: Request) {
       );
     `;
 
+    // Creating InventoryDetails table
+    await sql`
+      CREATE TABLE IF NOT EXISTS InventoryDetails (
+        id SERIAL PRIMARY KEY,
+        inventory_id INT REFERENCES Inventory(id),
+        description TEXT,
+        manufacturer VARCHAR(100),
+        expiry_date DATE
+      );
+    `;
+
+    // Creating Orders table
+    await sql`
+      CREATE TABLE IF NOT EXISTS Orders (
+        id SERIAL PRIMARY KEY,
+        user_id INT REFERENCES Users(id),
+        order_date TIMESTAMP,
+        total DECIMAL
+      );
+    `;
+
+    // Creating OrderItems table
+    await sql`
+      CREATE TABLE IF NOT EXISTS OrderItems (
+        id SERIAL PRIMARY KEY,
+        order_id INT REFERENCES Orders(id),
+        product_id INT REFERENCES Inventory(id),
+        quantity INT,
+        price DECIMAL
+      );
+    `;
+
     return NextResponse.json({ message: "Tables created successfully" }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ error }, { status: 500 });
