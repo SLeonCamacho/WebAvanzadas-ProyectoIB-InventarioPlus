@@ -14,19 +14,18 @@ const Chat: React.FC<ChatProps> = ({ onClose }) => {
       <div className="h-60 overflow-y-scroll border-b-2 border-gray-200 p-2 mb-4">
         {/* Here you will loop over and display chat messages */}
       </div>
-      <form className="flex space-x-2">
+      <div className="flex space-x-2">
         <input 
           type="text" 
           placeholder="Type a message..." 
           className="flex-1 px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
         />
         <button 
-          type="submit" 
           className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
         >
           Send
         </button>
-      </form>
+      </div>
     </div>
   );
 };
