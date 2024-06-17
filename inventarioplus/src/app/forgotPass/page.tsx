@@ -2,15 +2,23 @@
 
 import Link from 'next/link';
 import React, { useState } from 'react';
+import { getUserByEmail } from '../api/fetch-data/users/query-users';
+import { useRouter } from 'next/navigation';
 
 const ForgotPass = () => {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
+  const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate sending email
-    setMessage('If you are registered, will send an email to reset your password.');
+    const emailUser = await getUserByEmail(email);
+    
+    if (emailUser.length > 0) {
+      router.push(`/renewPass?email=${encodeURIComponent(email)}`);
+    } else {
+      setMessage('User not found.');
+    }
   };
 
   return (
@@ -32,7 +40,7 @@ const ForgotPass = () => {
           >
             Send
           </button>
-          {message && <p className="text-green-500">{message}</p>}
+          {message && <p className="text-red-500">{message}</p>}
         </form>
       </div>
       <div className="text-center">

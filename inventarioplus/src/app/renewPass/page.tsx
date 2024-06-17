@@ -1,21 +1,39 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
+import { updateUserPass } from '../api/update-data/query-users';
 
 const RenewPass = () => {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const router = useRouter();
+  const searchParams = useSearchParams();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    const emailParam = searchParams.get('email');
+    if (emailParam) {
+      setEmail(decodeURIComponent(emailParam));
+    }
+  }, [searchParams]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (newPassword !== confirmPassword) {
       setError('Passwords do not match');
     } else {
       setError('');
-      router.push('/renewPass/passwordResetSuccess');
+      try {
+        const userPassUpdated = await updateUserPass(email, newPassword);
+        if (userPassUpdated.length > 0) {
+          router.push('/renewPass/passwordResetSuccess');
+        }
+      } catch (error) {
+        console.log('Error updating password:', error);
+      }
     }
   };
 

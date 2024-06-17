@@ -2,6 +2,8 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { getUserByEmail } from '../api/fetch-data/users/query-users';
+import { createUser } from '../api/insert-data/users/query-users';
 
 const SignUp = () => {
   const [name, setName] = useState('');
@@ -11,13 +13,25 @@ const SignUp = () => {
   const [error, setError] = useState('');
   const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (password !== confirmPassword) {
+
+    const emailUser = await getUserByEmail(email);
+
+    if (emailUser.length > 0) {
+      setError('User already registered. Please go back to the login page.');
+    } else if (password !== confirmPassword) {
       setError('Passwords do not match');
     } else {
       setError('');
-      router.push('/signUp/success');
+      try {
+        const userCreated = await createUser(name, email, password);
+        if (userCreated.length > 0) {
+          router.push(`/signUp/success?name=${encodeURIComponent(name)}`);
+        }
+      } catch (error) {
+        console.log('Error creating user:', error);
+      }
     }
   };
 

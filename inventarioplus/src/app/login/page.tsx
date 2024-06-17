@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { getUserByEmailAndPassword } from '../api/fetch-data/query-users-name-email';
+import { getUserByEmailAndPassword } from '../api/fetch-data/users/query-users';
 
 const Login = () => {
   const [email, setEmail] = useState('');
