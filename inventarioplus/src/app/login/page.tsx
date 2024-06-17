@@ -1,8 +1,9 @@
-"use client"
+"use client";
 
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { getUserByEmailAndPassword } from '../api/fetch-data/query-users-name-email';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -10,16 +11,21 @@ const Login = () => {
   const [message, setMessage] = useState('');
   const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate looking for user and password in the database
-    if (password !== 'a' || email !== 'a@a') {
-      setMessage('User not registered or incorrect password.');
-    } else {
+
+    // Fetch the user from the database
+    const users = await getUserByEmailAndPassword(email, password);
+
+    // Check if the user exists
+    if (users.length > 0) {
       setMessage('');
       router.push('/dashboard');
+    } else {
+      setMessage('User not registered or incorrect password.');
     }
   };
+
   return (
     <section className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-6">
       <div className="text-center mb-8">
