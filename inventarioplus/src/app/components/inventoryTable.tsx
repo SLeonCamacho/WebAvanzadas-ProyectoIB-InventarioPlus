@@ -46,9 +46,9 @@ const InventoryTable = ({ data }: { data: Inventory[] }) => {
               {headerGroup.headers.map(column => (
                 <th
                   {...column.getHeaderProps()}
-                  key={column.id}
                   className="px-6 py-3 border-b border-blue-200 text-black text-left text-sm uppercase font-medium"
                   style={{ textAlign: (column as any).align }}
+                  key={column.id}
                 >
                   {column.render('Header')}
                 </th>
@@ -60,13 +60,13 @@ const InventoryTable = ({ data }: { data: Inventory[] }) => {
           {rows.map(row => {
             prepareRow(row);
             return (
-              <tr {...row.getRowProps()} key={row.id} className="hover:bg-blue-100">
+              <tr {...row.getRowProps()} className="hover:bg-blue-100" key={row.id}>
                 {row.cells.map(cell => (
                   <td
                     {...cell.getCellProps()}
-                    key={cell.column.id}
                     className="px-6 py-4 whitespace-nowrap text-sm text-black"
                     style={{ textAlign: (cell.column as any).align }}
+                    key={cell.column.id}
                   >
                     {cell.render('Cell')}
                   </td>
