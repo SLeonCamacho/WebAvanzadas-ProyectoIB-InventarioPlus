@@ -13,7 +13,7 @@ const InventoryDetailsTable = ({ data }: { data: InventoryDetails[] }) => {
       {
         Header: 'Inventory ID',
         accessor: 'inventory_id',
-        align: 'left',
+        align: 'center',
       },
       {
         Header: 'Description',
@@ -28,7 +28,8 @@ const InventoryDetailsTable = ({ data }: { data: InventoryDetails[] }) => {
       {
         Header: 'Expiry Date',
         accessor: 'expiry_date',
-        align: 'right',
+        align: 'center',
+        Cell: ({ value }) => new Date(value).toLocaleDateString(),
       },
     ],
     []
@@ -47,13 +48,12 @@ const InventoryDetailsTable = ({ data }: { data: InventoryDetails[] }) => {
       <table {...getTableProps()} className="min-w-full bg-white border border-blue-200">
         <thead className="bg-blue-50">
           {headerGroups.map(headerGroup => (
-            <tr {...headerGroup.getHeaderGroupProps()} key={headerGroup.id}>
+            <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map(column => (
                 <th
                   {...column.getHeaderProps()}
                   className="px-6 py-3 border-b border-blue-200 text-black text-left text-sm uppercase font-medium"
                   style={{ textAlign: (column as any).align }}
-                  key={column.id}
                 >
                   {column.render('Header')}
                 </th>
@@ -65,13 +65,12 @@ const InventoryDetailsTable = ({ data }: { data: InventoryDetails[] }) => {
           {rows.map(row => {
             prepareRow(row);
             return (
-              <tr {...row.getRowProps()} className="hover:bg-blue-100" key={row.id}>
+              <tr {...row.getRowProps()} className="hover:bg-blue-100">
                 {row.cells.map(cell => (
                   <td
                     {...cell.getCellProps()}
                     className="px-6 py-4 whitespace-nowrap text-sm text-black"
                     style={{ textAlign: (cell.column as any).align }}
-                    key={cell.column.id}
                   >
                     {cell.render('Cell')}
                   </td>
