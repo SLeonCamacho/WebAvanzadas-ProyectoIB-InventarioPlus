@@ -1,9 +1,9 @@
 import React from 'react';
 import { useTable, Column } from 'react-table';
-import { Inventory } from '../types/tables';
+import { Orders } from '../types/tables';
 
-const InventoryTable = ({ data }: { data: Inventory[] }) => {
-  const columns: Column<Inventory>[] = React.useMemo(
+const OrdersTable = ({ data }: { data: Orders[] }) => {
+  const columns: Column<Orders>[] = React.useMemo(
     () => [
       {
         Header: 'ID',
@@ -11,18 +11,19 @@ const InventoryTable = ({ data }: { data: Inventory[] }) => {
         align: 'center',
       },
       {
-        Header: 'Product Name',
-        accessor: 'product_name',
-        align: 'left',
+        Header: 'User ID',
+        accessor: 'user_id',
+        align: 'center',
       },
       {
-        Header: 'Quantity',
-        accessor: 'quantity',
-        align: 'right',
+        Header: 'Order Date',
+        accessor: 'order_date',
+        align: 'center',
+        Cell: ({ value }) => new Date(value).toLocaleDateString(),
       },
       {
-        Header: 'Price',
-        accessor: 'price',
+        Header: 'Total',
+        accessor: 'total',
         align: 'right',
       },
     ],
@@ -78,4 +79,4 @@ const InventoryTable = ({ data }: { data: Inventory[] }) => {
   );
 };
 
-export default InventoryTable;
+export default OrdersTable;

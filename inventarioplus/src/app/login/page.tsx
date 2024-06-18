@@ -21,7 +21,7 @@ const Login = () => {
     // Check if the user exists
     if (users.length > 0) {
       setMessage('');
-      setCookie('userEmail', email, { maxAge: 24 * 60 * 60 }); // Set cookie for 1 day
+      setCookie('userEmail', email, { maxAge: 24 * 60 * 60 });
       router.push('/dashboard');
     } else {
       setMessage('User not registered or incorrect password.');

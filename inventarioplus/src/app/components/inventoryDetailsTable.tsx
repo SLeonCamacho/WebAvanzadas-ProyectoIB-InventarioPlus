@@ -1,9 +1,9 @@
 import React from 'react';
 import { useTable, Column } from 'react-table';
-import { Inventory } from '../types/tables';
+import { InventoryDetails } from '../types/tables';
 
-const InventoryTable = ({ data }: { data: Inventory[] }) => {
-  const columns: Column<Inventory>[] = React.useMemo(
+const InventoryDetailsTable = ({ data }: { data: InventoryDetails[] }) => {
+  const columns: Column<InventoryDetails>[] = React.useMemo(
     () => [
       {
         Header: 'ID',
@@ -11,19 +11,25 @@ const InventoryTable = ({ data }: { data: Inventory[] }) => {
         align: 'center',
       },
       {
-        Header: 'Product Name',
-        accessor: 'product_name',
+        Header: 'Inventory ID',
+        accessor: 'inventory_id',
+        align: 'center',
+      },
+      {
+        Header: 'Description',
+        accessor: 'description',
         align: 'left',
       },
       {
-        Header: 'Quantity',
-        accessor: 'quantity',
-        align: 'right',
+        Header: 'Manufacturer',
+        accessor: 'manufacturer',
+        align: 'left',
       },
       {
-        Header: 'Price',
-        accessor: 'price',
-        align: 'right',
+        Header: 'Expiry Date',
+        accessor: 'expiry_date',
+        align: 'center',
+        Cell: ({ value }) => new Date(value).toLocaleDateString(),
       },
     ],
     []
@@ -78,4 +84,4 @@ const InventoryTable = ({ data }: { data: Inventory[] }) => {
   );
 };
 
-export default InventoryTable;
+export default InventoryDetailsTable;

@@ -41,3 +41,17 @@ export async function getUserNameByEmail(email: string) {
     return [];
   }
 }
+
+export async function getUserIDByEmail(email: string) {
+  try {
+    const result = await sql`
+      SELECT id
+      FROM Users
+      WHERE email = ${email};
+    `;
+    return result.rows;
+  } catch (error) {
+    console.error('Error fetching user:', error);
+    return [];
+  }
+}
