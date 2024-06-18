@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { getUserByEmail } from '../api/fetch-data/users/query-users';
-import { createUser } from '../api/insert-data/users/query-users';
+import { getUserByEmail } from '../api/fetch-data/async-queries-user';
+import { createUser } from '../api/insert-data/async-queries';
 
 const SignUp = () => {
   const [name, setName] = useState('');

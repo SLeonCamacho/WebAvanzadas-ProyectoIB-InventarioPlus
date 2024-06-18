@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
-import { updateUserPass } from '../api/update-data/query-users';
+import { updateUserPass } from '../api/update-data/async-queries-user';
 
 const RenewPass = () => {
   const [newPassword, setNewPassword] = useState('');

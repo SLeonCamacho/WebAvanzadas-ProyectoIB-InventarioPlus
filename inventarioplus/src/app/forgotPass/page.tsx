@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import React, { useState } from 'react';
-import { getUserByEmail } from '../api/fetch-data/users/query-users';
+import { getUserByEmail } from '../api/fetch-data/async-queries-user';
 import { useRouter } from 'next/navigation';
 
 const ForgotPass = () => {

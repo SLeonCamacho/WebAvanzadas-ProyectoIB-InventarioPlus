@@ -3,7 +3,8 @@
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { getUserByEmailAndPassword } from '../api/fetch-data/users/query-users';
+import { getUserByEmailAndPassword } from '../api/fetch-data/async-queries-user';
+import { setCookie } from 'cookies-next';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -20,6 +21,7 @@ const Login = () => {
     // Check if the user exists
     if (users.length > 0) {
       setMessage('');
+      setCookie('userEmail', email, { maxAge: 24 * 60 * 60 }); // Set cookie for 1 day
       router.push('/dashboard');
     } else {
       setMessage('User not registered or incorrect password.');

@@ -20,7 +20,7 @@ export async function GET(request: Request) {
         product_name VARCHAR(100),
         quantity INT,
         price DECIMAL,
-        user_id INT REFERENCES Users(id)
+        user_id INT REFERENCES Users(id) ON DELETE CASCADE
       );
     `;
 
@@ -28,7 +28,7 @@ export async function GET(request: Request) {
     await sql`
       CREATE TABLE IF NOT EXISTS InventoryDetails (
         id SERIAL PRIMARY KEY,
-        inventory_id INT REFERENCES Inventory(id),
+        inventory_id INT REFERENCES Inventory(id) ON DELETE CASCADE,
         description TEXT,
         manufacturer VARCHAR(100),
         expiry_date DATE
@@ -39,7 +39,7 @@ export async function GET(request: Request) {
     await sql`
       CREATE TABLE IF NOT EXISTS Orders (
         id SERIAL PRIMARY KEY,
-        user_id INT REFERENCES Users(id),
+        user_id INT REFERENCES Users(id) ON DELETE CASCADE,
         order_date TIMESTAMP,
         total DECIMAL
       );
@@ -49,8 +49,8 @@ export async function GET(request: Request) {
     await sql`
       CREATE TABLE IF NOT EXISTS OrderItems (
         id SERIAL PRIMARY KEY,
-        order_id INT REFERENCES Orders(id),
-        product_id INT REFERENCES Inventory(id),
+        order_id INT REFERENCES Orders(id) ON DELETE CASCADE,
+        product_id INT REFERENCES Inventory(id) ON DELETE CASCADE,
         quantity INT,
         price DECIMAL
       );
