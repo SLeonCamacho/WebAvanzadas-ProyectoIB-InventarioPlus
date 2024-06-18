@@ -23,16 +23,26 @@ const TabsInventory: React.FC<TabsInventoryProps> = ({ userID, setInventoryData 
   const [deleteProductID, setDeleteProductID] = useState('');
   const [searchName, setSearchName] = useState('');
   const [searchResults, setSearchResults] = useState<Inventory[]>([]);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleTabClick = (index: number) => {
     setActiveTab(index);
+    setErrorMessage('');
   };
 
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault();
+    const parsedQuantity = parseInt(quantity);
+    const parsedPrice = parseFloat(price);
+
+    if (!productName || isNaN(parsedQuantity) || parsedQuantity <= 0 || isNaN(parsedPrice) || parsedPrice <= 0) {
+      setErrorMessage('Please enter valid product name, quantity, and price.');
+      return;
+    }
+
     if (userID) {
       try {
-        const result = await createInventory(productName, parseInt(quantity), parseFloat(price), parseInt(userID));
+        const result = await createInventory(productName, parsedQuantity, parsedPrice, parseInt(userID));
         if (result) {
           alert('Inventory item created successfully');
           const updatedData = await fetchAllInventory(parseInt(userID));
@@ -49,6 +59,10 @@ const TabsInventory: React.FC<TabsInventoryProps> = ({ userID, setInventoryData 
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!searchName) {
+      setErrorMessage('Please enter a product name to search.');
+      return;
+    }
     if (userID) {
       try {
         const results = await fetchInventoryByProductName(searchName, parseInt(userID));
@@ -62,8 +76,17 @@ const TabsInventory: React.FC<TabsInventoryProps> = ({ userID, setInventoryData 
 
   const handleUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
+    const parsedProductID = parseInt(productID);
+    const parsedNewQuantity = parseInt(newQuantity);
+    const parsedNewPrice = parseFloat(newPrice);
+
+    if (isNaN(parsedProductID) || parsedProductID <= 0 || !newProductName || isNaN(parsedNewQuantity) || parsedNewQuantity <= 0 || isNaN(parsedNewPrice) || parsedNewPrice <= 0) {
+      setErrorMessage('Please enter valid product ID, new product name, new quantity, and new price.');
+      return;
+    }
+
     try {
-      const result = await updateInventory(parseInt(productID), newProductName, parseInt(newQuantity), parseFloat(newPrice));
+      const result = await updateInventory(parsedProductID, newProductName, parsedNewQuantity, parsedNewPrice);
       if (result) {
         alert('Inventory item updated successfully');
         const updatedData = await fetchAllInventory(parseInt(userID));
@@ -79,8 +102,15 @@ const TabsInventory: React.FC<TabsInventoryProps> = ({ userID, setInventoryData 
 
   const handleDelete = async (e: React.FormEvent) => {
     e.preventDefault();
+    const parsedDeleteProductID = parseInt(deleteProductID);
+
+    if (isNaN(parsedDeleteProductID) || parsedDeleteProductID <= 0) {
+      setErrorMessage('Please enter a valid product ID to delete.');
+      return;
+    }
+
     try {
-      const result = await deleteInventory(parseInt(deleteProductID));
+      const result = await deleteInventory(parsedDeleteProductID);
       if (result) {
         alert('Inventory item deleted successfully');
         const updatedData = await fetchAllInventory(parseInt(userID));
@@ -108,6 +138,7 @@ const TabsInventory: React.FC<TabsInventoryProps> = ({ userID, setInventoryData 
         ))}
       </div>
       <div className="p-4">
+        {errorMessage && <p className="text-red-500">{errorMessage}</p>}
         {activeTab === 0 && (
           <div>
             <h2>Create</h2>
