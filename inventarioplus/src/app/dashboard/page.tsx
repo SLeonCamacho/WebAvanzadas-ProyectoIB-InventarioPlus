@@ -17,6 +17,12 @@ import TabsInventoryDetails from '../components/tabsInventoryDetails';
 import TabsOrders from '../components/tabsOrders';
 import TabsOrderItems from '../components/tabsOrderItems';
 
+const handleLogout = () => {
+  // Eliminar la cookie del correo electrónico del usuario
+  document.cookie = 'userEmail=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+  // Redirigir a la página de inicio de sesión
+  window.location.href = '/login';
+};
 const Dashboard = () => {
   const [showChat, setShowChat] = useState(false);
   const [userName, setUserName] = useState('');
@@ -108,6 +114,12 @@ const Dashboard = () => {
       <div className="text-center mb-8">
         <h1 className="text-3xl font-bold mb-4 text-black">Dashboard</h1>
         <p className="text-lg text-gray-700 mb-4">Welcome, {userName}</p>
+        <button
+  onClick={handleLogout}
+  className="px-4 py-2 bg-red-500 text-white rounded-full shadow-lg hover:bg-red-700"
+>
+  Logout
+</button>
         <div className="flex items-center justify-center">
           <Image
             className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70]"
