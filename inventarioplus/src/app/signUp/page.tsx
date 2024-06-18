@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { getUserByEmail } from '../api/fetch-data/async-queries-user';
 import { createUser } from '../api/insert-data/async-queries';
+import Link from 'next/link';
 
 const SignUp = () => {
   const [name, setName] = useState('');
@@ -79,6 +80,11 @@ const SignUp = () => {
           >
             Register
           </button>
+          <li>
+            <Link className="text-blue-500 hover:underline" href="/login">
+            Already registered? Log in
+            </Link>
+          </li>
         </form>
       </div>
     </section>
