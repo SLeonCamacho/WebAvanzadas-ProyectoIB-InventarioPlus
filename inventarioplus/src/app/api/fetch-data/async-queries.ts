@@ -15,6 +15,7 @@ export async function fetchAllInventory(user_id: number): Promise<Inventory[]> {
   }
 }
 
+/*Other fuctions...*/
 export async function fetchInventoryByProductName(product_name: string, user_id: number): Promise<Inventory[]> {
   try {
     const result = await sql<Inventory[]>`

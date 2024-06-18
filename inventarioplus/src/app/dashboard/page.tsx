@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import Chat from '../chat/chat-component';
+import Chat from '../chat/chat';
 import { getCookie } from 'cookies-next';
 import { getUserNameByEmail, getUserIDByEmail } from '../api/fetch-data/async-queries-user';
 import { fetchAllInventory, fetchAllInventoryDetails, fetchAllOrders, fetchAllOrderItems } from '../api/fetch-data/async-queries';
@@ -91,7 +91,7 @@ const Dashboard = () => {
           <div className="p-4 bg-white rounded shadow-md">
             <h2 className="text-xl font-semibold mb-2">Inventory</h2>
             <InventoryTable data={inventoryData} />
-            <TabsInventory />
+            <TabsInventory userID={userID} setInventoryData={setInventoryData} />
           </div>
           <div className="p-4 bg-white rounded shadow-md">
             <h2 className="text-xl font-semibold mb-2">Inventory Details</h2>
@@ -118,7 +118,7 @@ const Dashboard = () => {
           </button>
         </div>
       </div>
-      {showChat && <Chat onClose={closeChat} />}
+      {showChat && <Chat onClose={closeChat} userName={userName} />}
     </section>
   );
 };

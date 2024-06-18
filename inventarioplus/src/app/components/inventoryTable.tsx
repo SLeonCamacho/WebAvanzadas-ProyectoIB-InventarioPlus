@@ -47,7 +47,7 @@ const InventoryTable = ({ data }: { data: Inventory[] }) => {
                 <th
                   {...column.getHeaderProps()}
                   className="px-6 py-3 border-b border-blue-200 text-black text-left text-sm uppercase font-medium"
-                  style={{ textAlign: (column as any).align }}  // Use 'as any' to bypass type error
+                  style={{ textAlign: (column as any).align }}
                 >
                   {column.render('Header')}
                 </th>
@@ -64,7 +64,7 @@ const InventoryTable = ({ data }: { data: Inventory[] }) => {
                   <td
                     {...cell.getCellProps()}
                     className="px-6 py-4 whitespace-nowrap text-sm text-black"
-                    style={{ textAlign: (cell.column as any).align }}  // Use 'as any' to bypass type error
+                    style={{ textAlign: (cell.column as any).align }}
                   >
                     {cell.render('Cell')}
                   </td>

@@ -1,10 +1,10 @@
 import { sql } from '@vercel/postgres';
 
-export async function updateInventory(id: number, product_name: string, quantity: number, price: number, user_id: number) {
+export async function updateInventory(id: number, product_name: string, quantity: number, price: number) {
   try {
     const result = await sql`
       UPDATE Inventory
-      SET product_name = ${product_name}, quantity = ${quantity}, price = ${price}, user_id = ${user_id}
+      SET product_name = ${product_name}, quantity = ${quantity}, price = ${price}
       WHERE id = ${id}
       RETURNING *;
     `;
@@ -30,11 +30,11 @@ export async function updateInventoryDetails(id: number, inventory_id: number, d
   }
 }
 
-export async function updateOrder(id: number, user_id: number, order_date: string, total: number) {
+export async function updateOrder(id: number, order_date: string, total: number) {
   try {
     const result = await sql`
       UPDATE Orders
-      SET user_id = ${user_id}, order_date = ${order_date}, total = ${total}
+      SET order_date = ${order_date}, total = ${total}
       WHERE id = ${id}
       RETURNING *;
     `;
