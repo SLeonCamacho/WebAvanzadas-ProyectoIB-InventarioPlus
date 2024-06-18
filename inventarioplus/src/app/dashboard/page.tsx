@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import { useSpring, animated } from '@react-spring/web';
 import Image from 'next/image';
 import Chat from '../chat/chat';
 import { getCookie } from 'cookies-next';
@@ -53,16 +54,16 @@ const Dashboard = () => {
       const loadInventoryData = async () => {
         const data = await fetchAllInventory(parseInt(userID));
         setInventoryData(data);
-  
+
         const totalProducts = data.length;
         const totalQuantity = data.reduce((acc, item) => acc + (item.quantity || 0), 0);
         const totalPrice = data.reduce((acc, item) => acc + (parseFloat(item.price as unknown as string) || 0), 0);
-  
+
         setTotalProducts(totalProducts);
         setAverageQuantity(totalProducts > 0 ? totalQuantity / totalProducts : 0);
         setAveragePrice(totalProducts > 0 ? totalPrice / totalProducts : 0);
       };
-  
+
       loadInventoryData();
 
       {/*
@@ -90,6 +91,10 @@ const Dashboard = () => {
     }
   }, [userID]);
 
+  const totalProductsSpring = useSpring({ from: { number: 0 }, number: totalProducts, delay: 1000 });
+  const averageQuantitySpring = useSpring({ from: { number: 0 }, number: averageQuantity, delay: 1000 });
+  const averagePriceSpring = useSpring({ from: { number: 0 }, number: averagePrice, delay: 1000 });
+
   const toggleChat = () => {
     setShowChat(!showChat);
   };
@@ -116,13 +121,13 @@ const Dashboard = () => {
         <p className="text-lg text-gray-700 mb-4">Here you can see data, perform CRUD operations and chat with other users.</p>
         <div className="flex items-center justify-center space-x-4 mb-4">
           <div className="px-4 py-2 bg-blue-100 rounded-full">
-            <p className="text-black">Total Products: {totalProducts}</p>
+            <p className="text-black">Total Products: <animated.span>{totalProductsSpring.number.to(n => n.toFixed(0))}</animated.span></p>
           </div>
           <div className="px-4 py-2 bg-green-100 rounded-full">
-            <p className="text-black">Average Quantity: {averageQuantity.toFixed(2)}</p>
+            <p className="text-black">Average Quantity: <animated.span>{averageQuantitySpring.number.to(n => n.toFixed(2))}</animated.span></p>
           </div>
           <div className="px-4 py-2 bg-yellow-100 rounded-full">
-            <p className="text-black">Average Price: {averagePrice.toFixed(2)}</p>
+            <p className="text-black">Average Price: <animated.span>{averagePriceSpring.number.to(n => n.toFixed(2))}</animated.span></p>
           </div>
         </div>
         <div className="grid grid-cols-1 gap-4 text-black">
