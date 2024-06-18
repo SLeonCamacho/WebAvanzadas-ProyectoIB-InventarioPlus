@@ -39,7 +39,7 @@ const Chat: React.FC<ChatProps> = ({ onClose, userName }) => {
 
   return (
     <div className="fixed bottom-0 right-0 w-150 p-4 bg-white rounded-t-lg shadow-lg">
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex justify-end items-center mb-4">
         <button onClick={onClose} className="text-gray-700 hover:text-red-700">X</button>
       </div>
       <div className="h-60 overflow-y-scroll border-b-2 border-gray-200 p-2 mb-4">
